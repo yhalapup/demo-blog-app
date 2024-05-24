@@ -5,12 +5,12 @@ The objective of this test case is to evaluate your ability to import data from 
 You have to assume that the provided blog application is a production environment running application and must consider all scenarios relevant for this situation.
 
 
-##Prerequisites
+## Prerequisites
 A running instance of the Rails blog application.
 The generate_comments_csv.rb script has been executed and a comments.csv file has been generated.
 The comments.csv file is located in the root directory of the Rails application.
 
-###Steps
+### Steps
 Create a Rubt script to handle the import of comments from the CSV file into the Rails application. The task should:
 
 - Read the comments.csv file.
