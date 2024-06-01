@@ -1,14 +1,14 @@
 # generate_comments_csv.rb
 
-require 'csv'
-require 'faker'
-require_relative './config/environment'
+require "csv"
+require "faker"
+require_relative "config/environment"
 
 # Fetch all post slugs from the database
 post_slugs = Post.pluck(:slug)
 
 # Number of comments to generate
-num_comments = 10000
+num_comments = 10_000
 
 # Array to hold comment data
 comments_data = []
@@ -24,11 +24,11 @@ num_comments.times do
 end
 
 # Define CSV file path
-csv_file_path = 'comments.csv'
+csv_file_path = "comments.csv"
 
 # Write comments to CSV
-CSV.open(csv_file_path, 'wb') do |csv|
-  csv << ['Post Slug', 'User Name', 'User Email', 'Content'] # CSV header
+CSV.open(csv_file_path, "wb") do |csv|
+  csv << ["Post Slug", "User Name", "User Email", "Content"] # CSV header
   comments_data.each do |comment|
     csv << comment
   end

@@ -1,10 +1,8 @@
-
 class Post < ApplicationRecord
   belongs_to :user
   belongs_to :category
   has_many :comments, dependent: :destroy
-  
-  
+
   before_validation :generate_slug
 
   validates :slug, uniqueness: true
@@ -27,6 +25,4 @@ class Post < ApplicationRecord
 
     self.slug = unique_slug
   end
-  
-  
 end

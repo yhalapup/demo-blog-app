@@ -15,7 +15,7 @@ gem "stimulus-rails"
 gem "turbo-rails"
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "pry"
   gem "rubocop", "~> 1.58", require: false
   gem "rubocop-migration", "~> 0.4.2", require: false
