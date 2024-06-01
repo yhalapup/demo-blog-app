@@ -12,7 +12,7 @@ services:
         - "demo-blog.app.dev"
     tty: true
     stdin_open: true
-    # entrypoint: /docker/entrypoints/app-entrypoint.sh
+    entrypoint: /docker/entrypoints/app-entrypoint.sh
     ports:
       - "3000:3000"
     volumes:
