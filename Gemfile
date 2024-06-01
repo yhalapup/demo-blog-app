@@ -17,6 +17,10 @@ gem "turbo-rails"
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "pry"
+  gem "rubocop", "~> 1.58", require: false
+  gem "rubocop-migration", "~> 0.4.2", require: false
+  gem "rubocop-performance", "~> 1.19", require: false
+  gem "rubocop-rails", "~> 2.22", require: false
 end
 
 group :development do
