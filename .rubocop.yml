@@ -1,0 +1,41 @@
+require:
+  - rubocop-migration
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.2
+  TargetRailsVersion: 7.0
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  NewCops: enable
+  Exclude:
+    - "bin/**/*"
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "db/schema.rb"
+    - "spec/rails_helper.rb"
+    - "spec/spec_helper.rb"
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: "compact"
+  Exclude:
+    - "config/application.rb"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - "db/migrate/**/*"
+    - "spec/support/**/*"
+  
+Rails/Output:
+  Exclude:
+    - "db/seeds.rb"
