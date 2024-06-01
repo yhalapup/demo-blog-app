@@ -1,0 +1,30 @@
+services:
+
+  app:
+    build:
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+      context: .
+      dockerfile: docker/dockerfiles/app.dockerfile
+      target: development
+      tags:
+        - "demo-blog.app.dev"
+    tty: true
+    stdin_open: true
+    # entrypoint: /docker/entrypoints/app-entrypoint.sh
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/usr/local/bundle/gems
+    env_file:
+      - ./docker/.env.development
+
+volumes:
+  gem_cache:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./vendor/bundle
+      o: bind

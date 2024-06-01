@@ -1,0 +1,17 @@
+
+!log/.keep
+!tmp/.keep
+!vendor/.keep
+
+.idea
+.git
+
+config/credentials/*.key
+
+log
+node_modules
+public/assets
+public/packs
+public/packs-test
+tmp
+vendor/bundle

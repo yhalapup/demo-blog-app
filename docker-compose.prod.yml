@@ -1,0 +1,43 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/dockerfiles/app.dockerfile
+      target: production
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+        RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      tags:
+        - "ruby-challenge.app.prod:latest"
+    depends_on:
+       - redis
+    entrypoint: /docker/entrypoints/app-entrypoint.sh
+    restart: always
+    stop_grace_period: "3s"
+    ports:
+      - 3000:3000
+    env_file:
+      - docker/.env.production
+
+  redis:
+    image: redis:6.2.3
+    restart: always
+    stop_grace_period: "3s"
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/dockerfiles/web.dockerfile
+      args:
+        SERVER_NAME: ${SERVER_NAME}
+      tags:
+        - "ruby-challenge.web.prod:latest"
+    depends_on:
+      - app
+    restart: always
+    ports:
+      - 80:8000
+    env_file:
+      - ./docker/.env.production
