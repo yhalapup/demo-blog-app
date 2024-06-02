@@ -21,7 +21,21 @@ services:
     env_file:
       - ./docker/.env.development
 
+  db:
+    image: postgres:16.2
+    privileged: true
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - ./docker/.env.development
+
 volumes:
+  db-data:
   gem_cache:
     driver: local
     driver_opts:

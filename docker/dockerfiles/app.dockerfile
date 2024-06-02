@@ -3,6 +3,8 @@ ARG DEBIAN_VERSION=bullseye
 
 FROM ruby:$RUBY_VERSION-slim-$DEBIAN_VERSION as base
 
+ARG DEBIAN_VERSION
+
 ARG USER=appuser
 ARG GROUP=appuser
 ARG USER_ID
@@ -32,6 +34,16 @@ ENV RUBYGEMS_VERSION ${RUBYGEMS_VERSION:-3.5.9}
 
 RUN gem update --system $RUBYGEMS_VERSION
 RUN chown -R ${USER}:${GROUP} /usr/local/bundle
+
+ARG PG_MAJOR=16
+RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+    gpg --dearmor -o /usr/share/keyrings/postgres-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/postgres-archive-keyring.gpg] https://apt.postgresql.org/pub/repos/apt/" \
+    $DEBIAN_VERSION-pgdg main $PG_MAJOR | tee /etc/apt/sources.list.d/postgres.list > /dev/null
+RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+    libpq-dev \
+    postgresql-client-$PG_MAJOR
 
 # Application dependencies
 RUN apt-get update -qq && \
