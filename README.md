@@ -11,15 +11,8 @@
 
 ### Built with
 
-Notes project uses such technologies:
-- Ruby 3.2
-- Rails 7.0
-- PostgreSQL 16.2
-- Redis 7.2
-- sidekiq
-- Docker
-- Docker Compose
-- Makefile
+Project uses technologies
+Ruby 3.2, Rails 7.0, PostgreSQL 16.2, Redis 7.2, sidekiq, Docker, Docker Compose, Makefile
 
 ### Structure
 
