@@ -52,8 +52,7 @@ The following  must be installed:
 
 This instruction shows how to run csv file import locally in production environment.
 (Copyying master.key from example.master.key is just for convenience to run csv file import locally
-in production environment. For real production environment must change master.key and credentials.yml.enc, 
-regenerate files)
+in production environment. For real production environment must regenerate files)
 
 1.  To download the project, use `git clone`
 
@@ -67,7 +66,6 @@ All the following commands use inside the root project directory
 cp docker/.env.production.example docker/.env.production
 cp config/example.master.key config/master.key
 cp config/example.credentials.yml.enc config/credentials.yml.enc
-
 ```
 
 4. Start docker services in production environment, using the command:
