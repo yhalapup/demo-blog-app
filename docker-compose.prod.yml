@@ -1,6 +1,6 @@
 services:
 
-  app:
+  app: &app
     build:
       context: .
       dockerfile: docker/dockerfiles/app.dockerfile
@@ -19,6 +19,13 @@ services:
     stop_grace_period: "3s"
     env_file:
       - docker/.env.production
+
+  worker:
+    <<: *app
+    entrypoint: /docker/entrypoints/worker-entrypoint.sh
+    depends_on:
+      - app
+      - redis
 
   db:
     image: postgres:16.2

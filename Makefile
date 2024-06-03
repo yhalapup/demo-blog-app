@@ -1,17 +1,19 @@
 .PHONY:  down dbmigrate save-prod-images-to-archive up
 
 down:
-	@docker compose down
+	@docker compose --env-file docker/.env.development down
 
 dbmigrate:
 	@docker compose exec app bash -c "rails db:migrate RAILS_ENV=development"
 
 up:
-	@mkdir -p vendor/bundle
 	@docker compose --env-file docker/.env.development up --build
 
 up-prod:
 	@docker compose --env-file docker/.env.production -f docker-compose.prod.yml up --build
+
+generate-master-key:
+	@docker compose --env-file docker/.env.development exec app bash -c "EDITOR=sed rails credentials:edit"
 
 prepare-db-prod:
 	@docker compose --env-file docker/.env.production -f docker-compose.prod.yml exec app bash -c "rails db:create"

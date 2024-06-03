@@ -1,3 +1,98 @@
+- [Overview](#overview)
+    - [Built With](#built-with)
+    - [Structure](#structure)
+- [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Setup](#setup)
+
+## Overview
+
+### Built with
+
+Notes project uses such technologies:
+- Ruby 3.2
+- Rails 7.0
+- PostgreSQL 16.2
+- Redis 7.2
+- sidekiq
+- Docker
+- Docker Compose
+- Makefile
+
+### Structure
+
+Project consists from 4 services:
+
+1. `app`
+
+Ruby / Ruby on Rails simplified backend service for a blog application.
+
+2. `db`
+
+PostgreSQL database used as storage of data for `web` service.
+
+3. `worker`
+
+Service for background job processing. It used gem `sidekiq`.
+
+4. `redis`
+
+Data store used by `worker` service.
+
+5. `web`
+
+Nginx 
+
+## Installation
+
+### Prerequisites
+
+The following  must be installed:
+- **docker**              (must docker 25 or newer)
+- **docker compose**      (must be docker compose v2  [Check more in detail](https://docs.docker.com/compose/migrate/))
+- **git**
+- **make**
+
+### Setup
+
+This instruction shows how to run csv file import locally in production environment.
+(Copyying master.key from example.master.key is just for convenience to run csv file import locally
+in production environment. For real production environment must change master.key and credentials.yml.enc, 
+regenerate files)
+
+1.  To download the project, use `git clone`
+
+***
+All the following commands use inside the root project directory
+***
+
+2.  Create necessary configuration for project setup:
+
+```bash
+cp docker/.env.production.example docker/.env.production
+cp config/example.master.key config/master.key
+cp config/example.credentials.yml.enc config/credentials.yml.enc
+
+```
+
+4. Start docker services in production environment, using the command:
+ ```bash
+make up-prod
+```
+
+6. Prepare database:
+```bash
+make prepare-db-prod
+``` 
+6. Generate csv file:
+```bash
+make generate-csv-prod
+``` 
+7. Import comments from csf file into blog application in production environment:
+```bash
+make import-comments-prod
+```
+
 # Test Application
 
 ## Objective
