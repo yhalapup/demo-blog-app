@@ -117,7 +117,7 @@ I, [2024-06-03T20:24:22.361613 #69]  INFO -- : [ActiveJob] [Csv::ImportCommentsJ
 
 Running the command to import comments from csv file took 4342.45ms = 4.3 seconds.
 
-If comments create failed then check the log file:
+Validation errors for comments can find in the log file:
 ```bash
 docker compose exec app bash -c "vim log/production_csv.log"
 ```
