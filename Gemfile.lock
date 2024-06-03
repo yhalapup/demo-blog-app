@@ -54,6 +54,8 @@ GEM
     activerecord (7.0.8.3)
       activemodel (= 7.0.8.3)
       activesupport (= 7.0.8.3)
+    activerecord-import (1.7.0)
+      activerecord (>= 4.2)
     activestorage (7.0.8.3)
       actionpack (= 7.0.8.3)
       activejob (= 7.0.8.3)
@@ -220,6 +222,7 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
+    smarter_csv (1.10.3)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -259,6 +262,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-import (~> 1.7)
   bootsnap
   debug
   faker (~> 3.0)
@@ -273,6 +277,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.19)
   rubocop-rails (~> 2.22)
   sidekiq (~> 7.2)
+  smarter_csv (~> 1.10)
   sprockets-rails
   stimulus-rails
   turbo-rails
