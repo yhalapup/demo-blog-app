@@ -4,6 +4,8 @@
 - [Installation](#installation)
     - [Prerequisites](#prerequisites)
     - [Setup](#setup)
+- [Result](#result)
+
 
 ## Overview
 
@@ -88,9 +90,35 @@ make prepare-db-prod
 ```bash
 make generate-csv-prod
 ``` 
-7. Import comments from csf file into blog application in production environment:
+7. Import comments from csv file into blog application in production environment:
 ```bash
 make import-comments-prod
+```
+
+## Result
+
+The task used for optimization:
+`gem "activerecord-import"`
+`gem "smarter_csv"`
+`gem "sidekiq"`
+processing in batches
+
+The following is the output of importing comments from csv file:
+
+```bash
+make import-comments-prod
+```
+
+```bash
+I, [2024-06-03T20:24:18.019247 #69]  INFO -- : [ActiveJob] [Csv::ImportCommentsJob] [97b589ee-137f-4ffc-bd60-dace48a65421] Performing Csv::ImportCommentsJob (Job ID: 97b589ee-137f-4ffc-bd60-dace48a65421) from Sidekiq(demo_blog_app_production_high) enqueued at  with arguments: "comments.csv"
+I, [2024-06-03T20:24:22.361613 #69]  INFO -- : [ActiveJob] [Csv::ImportCommentsJob] [97b589ee-137f-4ffc-bd60-dace48a65421] Performed Csv::ImportCommentsJob (Job ID: 97b589ee-137f-4ffc-bd60-dace48a65421) from Sidekiq(demo_blog_app_production_high) in 4342.45ms
+```
+
+Running the command to import comments from csv file took 4342.45ms = 4.3 seconds.
+
+If comments create failed then check the log file:
+```bash
+docker compose exec app bash -c "vim log/production_csv.log"
 ```
 
 # Test Application
