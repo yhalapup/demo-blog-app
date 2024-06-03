@@ -31,7 +31,7 @@ Ruby / Ruby on Rails simplified backend service for a blog application.
 
 2. `db`
 
-PostgreSQL database used as storage of data for `web` service.
+PostgreSQL database used as storage of data for app service.
 
 3. `worker`
 
