@@ -98,10 +98,11 @@ make import-comments-prod
 ## Result
 
 The task used for optimization:
-`gem "activerecord-import"`
-`gem "smarter_csv"`
-`gem "sidekiq"`
-processing in batches
+
+- `gem "activerecord-import"` 
+- `gem "smarter_csv"`
+- `gem "sidekiq"`
+- processing in batches
 
 The following is the output of importing comments from csv file:
 
