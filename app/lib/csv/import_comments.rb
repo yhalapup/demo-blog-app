@@ -1,6 +1,6 @@
 require "activerecord-import"
 require "smarter_csv"
-require 'csv'
+require "csv"
 
 class Csv::ImportComments
   BATCH_SIZE = 50
@@ -14,20 +14,18 @@ class Csv::ImportComments
 
   private
 
-  private
-
   def posts_info
-    Post.pluck(:id, :slug).map { |el|  {id: el[0], slug: el[1] } }
+    Post.pluck(:id, :slug).map { |el| { id: el[0], slug: el[1] } }
   end
 
-  def create_users(filename:, options: { :chunk_size => BATCH_SIZE })
+  def create_users(filename:, options: { chunk_size: BATCH_SIZE })
     SmarterCSV.process(filename, options) do |chunk|
-      users_info = chunk.map { |element| {name: element[:user_name],email: element[:user_email] } }
+      users_info = chunk.map { |element| { name: element[:user_name], email: element[:user_email] } }
       User.insert_all(users_info, unique_by: :email)
     end
   end
 
-  def import_comments(filename:, options: { :chunk_size => BATCH_SIZE })
+  def import_comments(filename:, options: { chunk_size: BATCH_SIZE })
     SmarterCSV.process(filename, options) do |chunk|
       data = add_user_ids(chunk)
       data = add_post_ids(data)
@@ -47,17 +45,19 @@ class Csv::ImportComments
   def add_post_ids(data)
     post_slugs = data.pluck(:post_slug)
     post_ids = post_slugs.inject([]) do |array, item|
-      post_id = posts_info.find {|element| element[:slug] == item }[:id]
-      array << { post_id: post_id }
+      post_id = posts_info.find { |element| element[:slug] == item }[:id]
+      array << { post_id: }
     end
     data.zip(post_ids).map { |first, second| first.merge(second) }
   end
 
   def create_comments(data)
-    columns = [ :content, :post_id, :user_id ]
+    columns = %i[content post_id user_id]
     result = Comment.import columns, data, validate: true, track_validation_failures: true
-    result.failed_instances.map { |element| custom_logger.info("Failed to create instance of Comment #{element[1].inspect}, #{element[1].errors.full_messages}") }
-    data = []
+    result.failed_instances.map do |element|
+      custom_logger.info("Failed to create instance of Comment #{element[1].inspect}, #{element[1].errors.full_messages}")
+    end
+    []
   end
 
   def custom_logger
