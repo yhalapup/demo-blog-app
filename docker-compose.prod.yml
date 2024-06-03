@@ -12,17 +12,25 @@ services:
       tags:
         - "ruby-challenge.app.prod:latest"
     depends_on:
-       - redis
+      - db
+      - redis
     entrypoint: /docker/entrypoints/app-entrypoint.sh
     restart: always
     stop_grace_period: "3s"
-    ports:
-      - 3000:3000
     env_file:
       - docker/.env.production
 
+  db:
+    image: postgres:16.2
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    restart: always
+    env_file:
+      - ./docker/.env.production
+
   redis:
-    image: redis:6.2.3
+    image: redis:7.2
     restart: always
     stop_grace_period: "3s"
 
