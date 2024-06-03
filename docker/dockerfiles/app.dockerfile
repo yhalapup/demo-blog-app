@@ -74,7 +74,9 @@ COPY --chown=${USER}:${GROUP} . ${APP_HOME}
 RUN RAILS_ENV=development NODE_ENV=development bundle exec rails assets:precompile
 
 COPY --chown=${USER}:${GROUP} ./docker/entrypoints/development/app-entrypoint.sh /docker/entrypoints/app-entrypoint.sh
+COPY --chown=${USER}:${GROUP} ./docker/entrypoints/worker-entrypoint.sh /docker/entrypoints/worker-entrypoint.sh
 RUN chmod +x /docker/entrypoints/app-entrypoint.sh
+RUN chmod +x /docker/entrypoints/worker-entrypoint.sh
 
 FROM base as production
 

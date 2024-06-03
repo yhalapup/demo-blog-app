@@ -1,6 +1,6 @@
 services:
 
-  app:
+  app: &app
     build:
       args:
         USER_ID: ${USER_ID:-0}
@@ -21,6 +21,16 @@ services:
     env_file:
       - ./docker/.env.development
 
+  worker:
+    <<: *app
+    entrypoint: /docker/entrypoints/worker-entrypoint.sh
+    depends_on:
+      - app
+      - redis
+    ports: []
+    volumes:
+      - gem_cache:/usr/local/bundle/gems
+
   db:
     image: postgres:16.2
     privileged: true
@@ -33,6 +43,11 @@ services:
       - db-data:/var/lib/postgresql/data
     env_file:
       - ./docker/.env.development
+
+  redis:
+    image: redis:7.2
+    ports:
+      - "6379:6379"
 
 volumes:
   db-data:
